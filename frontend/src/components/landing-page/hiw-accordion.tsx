@@ -39,7 +39,7 @@ import {
         {HiwAccordionData.map(({ icon, title, description }, index) => {
           return (
             <AccordionItem
-              className="rounded-md bg-white mb-6 w-[500px]"
+              className="rounded-md bg-white mb-6 px-4 w-[500px]"
               value={`item-${index + 1}`}
               key={index}
             >

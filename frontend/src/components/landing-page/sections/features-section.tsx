@@ -13,8 +13,8 @@ const FeaturesSection = () => {
             description: "Get real-time insights into your event's performance with our analytics dashboard. Track attendance, engagement, and revenue in real-time."
         }, {
             icon: "/assets/poap-integration.png",
-            title: "POAP Integration",
-            description: "Enhance your event experience with our POAP (Proof of Attendance Protocol) integration. Reward attendees for their participation and create a unique experience."
+            title: "SPOK Integration",
+            description: "Enhance your event experience with our SPOK (Starknet Proof-of-Kudos) integration. Reward attendees for their participation and create a unique experience."
         }, {
             icon: "/assets/security.png",
             title: "Security",
@@ -32,7 +32,7 @@ const FeaturesSection = () => {
         )
     })
     return (
-        <div className='bg-base-white flex flex-col justify-center items-center'>
+        <div className='bg-white flex flex-col justify-center items-center'>
             <div className='flex flex-col justify-center items-center max-w-[1280px]'>
             <h1 className='text-deep-blue text-6xl font-bold pt-16 pb-20'>Features</h1>
             <div className='flex justify-center items-center flex-wrap gap-6'>
