@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { BiSolidMessageDetail } from "react-icons/bi";
 import { FaBell } from "react-icons/fa";

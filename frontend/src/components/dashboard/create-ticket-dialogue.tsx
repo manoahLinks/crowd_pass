@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
@@ -14,7 +16,7 @@ const CreateEventTicket = ({organizer, eventid}:Props) => {
 
   return (
     <Dialog>
-    {address === organizer ? <DialogTrigger className=" rounded-lg font-medium bg-deep-blue text-primary hover:text-deep-blue py-2 hover:bg-primary px-6">Create Tickets
+    {"address" === organizer ? <DialogTrigger className=" rounded-lg font-medium bg-deep-blue text-primary hover:text-deep-blue py-2 hover:bg-primary px-6">Create Tickets
     </DialogTrigger> : ''}
     <DialogContent className="flex justify-center items-center bg-base-white">
       <DialogHeader>
@@ -24,7 +26,7 @@ const CreateEventTicket = ({organizer, eventid}:Props) => {
             initialValues={{
               quantity: 0,
               ticketId: 1,
-              organizer: address,
+              organizer: "address",
               price: 1,
             }}
             onSubmit={async (values, { setSubmitting }) => {

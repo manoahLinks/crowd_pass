@@ -1,6 +1,9 @@
+"use client"
+
 import React from 'react'
 import Header from '../header'
 import { Button } from '../../ui/button'
+import Link from 'next/link'
 
 const HeroSection = () => {
     return (
@@ -11,7 +14,9 @@ const HeroSection = () => {
                     <div className='flex flex-col gap-2 w-full h-full justify-center items-center mb-36 pt-10'>
                         <p className='text-2xl text-primary font-medium 2xl:text-4xl'>Have an Event?</p>
                         <p className='text-6xl text-white font-medium 2xl:text-8xl'>Transform it with CrowdPass</p>
+                        <Link href="/dashboard">
                         <Button className="bg-primary text-deep-blue text-lg px-10 py-2 font-semibold 2xl:text-2xl 2xl:py-6 2xl:px-12">Get Started</Button>
+                        </Link>
                     </div>
                 </div>
             </div>

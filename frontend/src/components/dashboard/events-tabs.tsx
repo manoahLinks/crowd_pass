@@ -1,8 +1,10 @@
+"use client"
+
 import React, { useState, useEffect } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import EventDetailsCard from "./event-details-cards";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const EventTabs = ({ pageTabs, data }:any) => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -45,7 +47,7 @@ const EventTabs = ({ pageTabs, data }:any) => {
                     <h1 className="text-2xl text-deep-blue">
                       You have not created any event
                     </h1>
-                    <Link to="/create-event">
+                    <Link href="/create-event">
                       <Button className="text-primary hover:text-deep-blue bg-deep-blue ">
                         Create Event
                       </Button>
@@ -56,7 +58,7 @@ const EventTabs = ({ pageTabs, data }:any) => {
                     <h1 className="text-2xl text-deep-blue">
                       Explore events to attend
                     </h1>
-                    <Link to="/events">
+                    <Link href="/events">
                       <Button className="text-primary hover:text-deep-blue bg-deep-blue">
                         Explore Events
                       </Button>

@@ -1,9 +1,11 @@
+"use client"
+
 import React from "react";
 import { Card, CardFooter } from "../ui/card";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
 import {CalendarIcon, MapPinIcon} from "lucide-react"
 import { epochToDatetime } from 'datetime-epoch-conversion';
+import Link from "next/link";
 
 
 
@@ -37,7 +39,7 @@ const EventCard = ({ event}: any) => {
        
       </div>
         <CardFooter className="w-full bg-base-white p-4 flex items-center justify-center">
-          <Link to={`/events/${eventId}`} className="w-full">
+          <Link href={`/events/${eventId}`} className="w-full">
             <Button
               variant="outline"
               className="text-deep-blue border-deep-blue w-full"

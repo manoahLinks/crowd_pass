@@ -1,3 +1,5 @@
+"use client"
+
 import { Activity, FolderOpen, Ticket } from "lucide-react";
 import React from "react";
 import { BiMoneyWithdraw, BiRegistered } from "react-icons/bi";

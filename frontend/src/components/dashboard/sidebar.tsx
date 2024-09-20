@@ -1,11 +1,13 @@
+"use client"
+
 import React from "react";
-import { Link } from "react-router-dom";
 import SidebarItem from "./sidebar-item";
 import { IoTicket } from "react-icons/io5";
 import { TiHome } from "react-icons/ti";
 import { FaFolderOpen } from "react-icons/fa";
 import { FaAward } from "react-icons/fa6";
 import { MdCreateNewFolder } from "react-icons/md";
+import Link from "next/link";
 
 const Sidebar = () => {
   const eventMainSidebarData = [
@@ -41,7 +43,7 @@ const Sidebar = () => {
       <div className="flex flex-col py-2 2xl:py-6 justify-between h-screen">
         <div className="flex flex-col gap-10">
           <div className="my-2 mx-6 flex items-center">
-            <Link to="/" className="flex items-center">
+            <Link href="/" className="flex items-center">
               <img
                 src="/assets/hostit-logo-light.png"
                 alt="logo"
