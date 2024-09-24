@@ -1,9 +1,11 @@
+"use client"
+
 import React from "react";
-import { Link } from "react-router-dom";
 import  EventAttendees  from "./event-attendees";
 import { epochToDatetime } from "datetime-epoch-conversion";
 import { Clock4, LocateIcon, MenuIcon } from "lucide-react";
 import { Card } from "../ui/card";
+import Link from "next/link";
 
 const EventDetailsCard = ({ event }: any ) => {
   const { organizer, eventName, eventId, eventAddress, startTime, endTime } = event;
@@ -35,7 +37,7 @@ const EventDetailsCard = ({ event }: any ) => {
 
           <div className="mr-4 w-[50%]">
             <div className="flex flex-col">
-              <Link to={`/events/${eventId}`}>
+              <Link href={`/events/${eventId}`}>
                 <div className="flex justify-between">
                   <p className="text-deep-blue text-normal md:text-xl font-medium leading-tight line-clamp-1">
                     {eventName}

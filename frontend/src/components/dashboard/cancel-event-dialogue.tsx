@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { Button } from "../ui/button";
 import {
@@ -20,7 +22,7 @@ type Props = {
 const CancelEvent = ({organizer, eventid}: Props) => {
   return (
     <Dialog>
-      {address === organizer ? (
+      {"address" === organizer ? (
         <DialogTrigger className=" rounded-lg font-medium bg-deep-blue text-primary hover:text-deep-blue py-2 hover:bg-primary px-6">        
           Cancel Event
         </DialogTrigger>
@@ -35,7 +37,7 @@ const CancelEvent = ({organizer, eventid}: Props) => {
           <DialogDescription>
             <Formik
               initialValues={{
-                organizer: address,
+                organizer: "address",
               }}
               onSubmit={async (values, { setSubmitting }) => {
                 setSubmitting(true);

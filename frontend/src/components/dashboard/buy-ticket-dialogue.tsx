@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
@@ -14,7 +16,7 @@ const BuyTicketDialogue = ({organizer, eventid}: Props) => {
   
   return (
     <Dialog>
-    {address !== organizer ? <DialogTrigger className=" rounded-lg font-medium bg-deep-blue text-primary hover:text-deep-blue hover:bg-primary py-2 px-6">Buy Ticket
+    {"address" !== organizer ? <DialogTrigger className=" rounded-lg font-medium bg-deep-blue text-primary hover:text-deep-blue hover:bg-primary py-2 px-6">Buy Ticket
     </DialogTrigger> : ''}
     <DialogContent className="flex justify-center items-center bg-base-white">
       <DialogHeader>
@@ -22,7 +24,7 @@ const BuyTicketDialogue = ({organizer, eventid}: Props) => {
         <DialogDescription>
           <Formik
             initialValues={{
-              address: address,
+              address: "address",
               eventId: 1,
               ticketId: 1,
               quantity: 1

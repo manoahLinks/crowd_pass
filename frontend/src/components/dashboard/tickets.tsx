@@ -1,8 +1,10 @@
+"use client"
+
 import React, { useState } from "react";
 import QRCode from "react-qr-code";
 import { TbLoaderQuarter } from "react-icons/tb";
-import { Link } from "react-router-dom";
 import { epochToDatetime } from "datetime-epoch-conversion";
+import Link from "next/link";
 
 const Ticket = () => {
   const data = [
@@ -11,13 +13,13 @@ const Ticket = () => {
       eventName: "Test Event",
       description: "This is a test event",
       eventAddress: "12, jinadu street, lagos",
-      startTime: "1722114000",
-      endTime: "1722119000",
+      startTime: "1727114000",
+      endTime: "1727119000",
       isCancelled: true,
     },
   ];
 
-  const [tickets, setTickets] = useState({ loading: true, data: [] });
+  const [tickets, setTickets] = useState({ loading: false, data: [] });
   return (
     <>
       {tickets.loading ? (
@@ -61,7 +63,7 @@ const Ticket = () => {
                     <div className="text-center flex flex-col gap-3">
                       <Link
                         className="text-gray-500 dark:text-gray-400 text-sm"
-                        to={`/all-events/${eventId}`}
+                        href={`/all-events/${eventId}`}
                       >
                         View event details
                       </Link>
@@ -111,7 +113,7 @@ const Ticket = () => {
                     <div className="text-center flex flex-col gap-3">
                       <Link
                         className="text-gray-500 dark:text-gray-400 text-sm"
-                        to={`/all-events/${eventId}`}
+                        href={`/all-events/${eventId}`}
                       >
                         View event details
                       </Link>
