@@ -13,13 +13,13 @@ const Ticket = () => {
       eventName: "Test Event",
       description: "This is a test event",
       eventAddress: "12, jinadu street, lagos",
-      startTime: "1722114000",
-      endTime: "1722119000",
+      startTime: "1727114000",
+      endTime: "1727119000",
       isCancelled: true,
     },
   ];
 
-  const [tickets, setTickets] = useState({ loading: true, data: [] });
+  const [tickets, setTickets] = useState({ loading: false, data: [] });
   return (
     <>
       {tickets.loading ? (

@@ -25,12 +25,12 @@ export default {
 		  'hero-image': "url('/assets/hero-image.jpg')",
 		},
 		colors: {
-		  "deep-blue": "#0D0042",
-		  "primary": "#11EBF2",
-		  "active-green": "#12B54E",
+		  "deep-blue": "#5B5959",
+		  "primary": "#FF6932",
 		  "black": "#000000",
 		  "base-white": "#F5F5F5",
 		  "white": "#FFFFFF",
+		  "light-black": "#14141A"
 		}
 	  },
 	},

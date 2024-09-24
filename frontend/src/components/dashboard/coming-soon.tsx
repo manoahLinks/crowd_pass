@@ -1,15 +1,14 @@
 "use client"
 
 import React from "react";
-import { Link } from "";
 import { Button } from "../ui/button";
-import { Card } from "../ui/card";
+import Link from "next/link";
 
 const ComingSoon = () => {
   return (
     <div className="flex text-center justify-center items-center flex-col w-full h-[calc(100vh-130px)] gap-2 ">
       <h1 className="text-deep-blue text-6xl font-bold">Coming soon!</h1>
-      <Link to={"/events"}>
+      <Link href={"/dashboard/explore-events"}>
         {" "}
         <Button
           variant="link"

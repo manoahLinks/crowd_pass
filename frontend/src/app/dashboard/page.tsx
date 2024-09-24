@@ -9,7 +9,7 @@ import { TbLoaderQuarter } from 'react-icons/tb';
 type Props = {}
 
 const page = (props: Props) => {
-  const [allEvents, setAllEvents] = useState({loading: true, data:[]});
+  const [allEvents, setAllEvents] = useState({loading: false, data:[]});
 
   return (
     <>

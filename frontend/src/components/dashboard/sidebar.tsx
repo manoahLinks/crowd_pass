@@ -17,24 +17,24 @@ const Sidebar = () => {
       title: "Dashboard",
     },
     {
-      url: "/events",
+      url: "/dashboard/explore-events",
       icon: <FaFolderOpen className="w-6 h-6" />,
       title: "Events",
     },
     {
-      url: "/create-event",
+      url: "/dashboard/create-event",
       icon: <MdCreateNewFolder className="w-6 h-6" />,
       title: "Create event",
     },
     {
-      url: "/tickets",
+      url: "/dashboard/event-tickets",
       icon: <IoTicket className="w-6 h-6" />,
       title: "Tickets",
     },
     {
-      url: "/poap",
+      url: "/dashboard/spoks",
       icon: <FaAward className="w-6 h-6" />,
-      title: "POAPs",
+      title: "SPOKs",
     },
   ];
 
@@ -45,7 +45,7 @@ const Sidebar = () => {
           <div className="my-2 mx-6 flex items-center">
             <Link href="/" className="flex items-center">
               <img
-                src="/assets/hostit-logo-light.png"
+                src="/assets/crowdpass_logo.png"
                 alt="logo"
                 width={150}
                 height={36}

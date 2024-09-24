@@ -47,7 +47,7 @@ const EventTabs = ({ pageTabs, data }:any) => {
                     <h1 className="text-2xl text-deep-blue">
                       You have not created any event
                     </h1>
-                    <Link href="/create-event">
+                    <Link href="/dashboard/create-event">
                       <Button className="text-primary hover:text-deep-blue bg-deep-blue ">
                         Create Event
                       </Button>
@@ -58,7 +58,7 @@ const EventTabs = ({ pageTabs, data }:any) => {
                     <h1 className="text-2xl text-deep-blue">
                       Explore events to attend
                     </h1>
-                    <Link href="/events">
+                    <Link href="/dashboard/explore-events">
                       <Button className="text-primary hover:text-deep-blue bg-deep-blue">
                         Explore Events
                       </Button>
