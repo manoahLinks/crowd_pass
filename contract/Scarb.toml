@@ -13,6 +13,12 @@ snforge_std = { git = "https://github.com/foundry-rs/starknet-foundry", tag = "v
 
 [[target.starknet-contract]]
 sierra = true
+casm = true
 
 [scripts]
 test = "snforge test"
+
+[tool.sncast.emperor]
+account = "emperor"
+account-file = "/Users/mano.dev/.starknet_accounts/starknet_open_zeppelin_accounts.json"
+url = "https://starknet-sepolia.g.alchemy.com/starknet/version/rpc/v0_7/RCp5m7oq9i9myxsvC8ctUmNq2Wq2Pa_v"

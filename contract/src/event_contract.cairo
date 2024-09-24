@@ -44,10 +44,18 @@ pub struct Events {
 
 #[starknet::contract]
 pub mod EventContract {
+
     use core::option::OptionTrait;
     use core::{traits::{TryInto, Into}, num::traits::zero::Zero};
     use super::{Events, IEventContract};
     use starknet::{get_caller_address, ContractAddress, get_block_timestamp, get_contract_address};
+
+    use contract::{
+        errors::event_errors::Errors,
+        tickets::tickets::TicketFactory,
+    };
+
+    component!(path: TicketFactory, storage: tickets_factory, event: TicketFactoryEvent);
 
     // events
     #[event]
@@ -57,7 +65,8 @@ pub mod EventContract {
         EventRescheduled: EventRescheduled,
         EventCanceled: EventCanceled,
         TicketPurchased: TicketPurchased,
-        TicketRecliamed: TicketRecliamed
+        TicketRecliamed: TicketRecliamed,
+        TicketFactoryEvent: TicketFactory::Event
     }
 
     #[derive(Drop, starknet::Event)]
@@ -101,7 +110,9 @@ pub mod EventContract {
         token_address: ContractAddress,
         event_ticket_count: LegacyMap::<ContractAddress, u256>,
         user_event_token_id: LegacyMap::<(u32, ContractAddress), u256>,
-        user_has_claim_refund: LegacyMap::<(u32, ContractAddress), bool>
+        user_has_claim_refund: LegacyMap::<(u32, ContractAddress), bool>,
+        #[substorage(v0)]
+        tickets_factory: TicketFactory::Storage
     }
 
     #[constructor]
@@ -111,6 +122,9 @@ pub mod EventContract {
     ) {
         self.token_address.write(_token_address);
     }
+
+    #[abi(embed_v0)]
+    impl ticketsImpl = TicketFactory::Tickets<ContractState>;
 
     // implementions and functions
     #[abi(embed_v0)]
@@ -132,15 +146,9 @@ pub mod EventContract {
             let address_this = get_contract_address();
 
             // assert not zero ContractAddress
-            assert(caller.is_non_zero(), token_bound::errors::Errors::ZERO_ADDRESS_CALLER);
+            assert(caller.is_non_zero(), Errors::ZERO_ADDRESS_CALLER);
 
-            // deploy tickets contract here
-            let ticket_factory = ITicketFactoryDispatcher {
-                contract_address: self.ticket_factory_address.read()
-            };
-
-            let _event_ticket_addr = ticket_factory
-                .deploy_ticket(caller, address_this, _event_count.into());
+            let _event_ticket_addr = self.deploy_ticket(caller, caller, '');
 
             // new event struct instance
             let event_instance = Events {
