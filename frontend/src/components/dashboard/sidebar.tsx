@@ -2,12 +2,14 @@
 
 import React from "react";
 import SidebarItem from "./sidebar-item";
-import { IoTicket } from "react-icons/io5";
+import { IoLogOut, IoTicket } from "react-icons/io5";
 import { TiHome } from "react-icons/ti";
 import { FaFolderOpen } from "react-icons/fa";
 import { FaAward } from "react-icons/fa6";
 import { MdCreateNewFolder } from "react-icons/md";
 import Link from "next/link";
+import { Button } from "../ui/button";
+import { useDisconnect } from "@starknet-react/core";
 
 const Sidebar = () => {
   const eventMainSidebarData = [
@@ -59,18 +61,13 @@ const Sidebar = () => {
           </div>
         </div>
         <div className="flex flex-col items-center gap-3 mx-3">
-          <div className="flex gap-3">
-            <img
-              src="/assets/profile-picture.png"
-              alt="profile-picture"
-              width={71}
-              height={63}
-            />
-           
-          </div>
+         <hr className="h-4 w-full mx-10"/>
           <p>
 
-              ConnectButton 
+       <Button className="flex gap-2 bg-transparent py-6 " onClick={()=>{useDisconnect({})}}>
+       <IoLogOut color="#fff" size={30}/>
+       <p className="text-white ml-2 text-lg px-3 font-semibold ">LogOut</p>
+       </Button>
 
           </p>
         </div>

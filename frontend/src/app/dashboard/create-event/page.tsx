@@ -17,10 +17,10 @@ type Props = {}
 const page = (props: Props) => {
   return (
     <div className="w-full mt-10 flex justify-center items-center">
-        <Card className="w-full max-w-2xl shadow-2xl mb-4">
+        <Card className="w-full bg-light-black border-0 border-none max-w-2xl shadow-2xl mb-4">
           <CardHeader>
-            <CardTitle className="text-deep-blue">Create New Event</CardTitle>
-            <CardDescription className="text-deep-blue">
+            <CardTitle className="text-white text-2xl">Create New Event</CardTitle>
+            <CardDescription className="text-white text-xs">
               Fill out the details for your upcoming event.
             </CardDescription>
           </CardHeader>
@@ -75,10 +75,11 @@ const page = (props: Props) => {
                 <CardContent className="grid gap-6">
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-2 flex flex-col">
-                      <label htmlFor="name" className="text-deep-blue">
+                      <label htmlFor="name" className="text-white">
                         Event Name
                       </label>
                       <Field
+                      className="rounded-md"
                         type="text"
                         name="name"
                         onChange={handleChange}
@@ -91,10 +92,11 @@ const page = (props: Props) => {
                       </div>
                     </div>
                     <div className="space-y-2 flex flex-col">
-                      <label htmlFor="email" className="text-deep-blue">
+                      <label htmlFor="email" className="text-white">
                         Email
                       </label>
                       <Field
+                      className="rounded-md"
                         type="email"
                         name="email"
                         onChange={handleChange}
@@ -109,10 +111,11 @@ const page = (props: Props) => {
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-2 flex flex-col">
-                      <label htmlFor="ticket-price" className="text-deep-blue">
+                      <label htmlFor="ticket-price" className="text-white">
                         City
                       </label>
                       <Field
+                      className="rounded-md"
                         type="text"
                         name="city"
                         onChange={handleChange}
@@ -126,10 +129,11 @@ const page = (props: Props) => {
                       </div>
                     </div>
                     <div className="space-y-2 flex flex-col">
-                      <label htmlFor="ticket-price" className="text-deep-blue">
+                      <label htmlFor="ticket-price" className="text-white">
                         Country
                       </label>
                       <Field
+                      className="rounded-md"
                         type="text"
                         name="country"
                         onChange={handleChange}
@@ -147,11 +151,12 @@ const page = (props: Props) => {
                     <div className="space-y-2 flex flex-col">
                       <label
                         htmlFor="event-category"
-                        className="text-deep-blue"
+                        className="text-white"
                       >
                         Event Category
                       </label>
                       <Field
+                      className="rounded-md"
                         as="select"
                         name="eventCategory"
                         onChange={handleChange}
@@ -165,10 +170,11 @@ const page = (props: Props) => {
                       </Field>
                     </div>
                     <div className="space-y-2 flex flex-col">
-                      <label htmlFor="event-type" className="text-deep-blue">
+                      <label htmlFor="event-type" className="text-white">
                         Event Type
                       </label>
                       <Field
+                      className="rounded-md"
                         as="select"
                         name="virtual_event"
                         onChange={handleChange}
@@ -182,10 +188,11 @@ const page = (props: Props) => {
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-2 flex flex-col">
-                      <label htmlFor="start-date" className="text-deep-blue">
+                      <label htmlFor="start-date" className="text-white">
                         Start Date
                       </label>
                       <Field
+                      className="rounded-md"
                         name="start_time"
                         type="datetime-local"
                         onChange={handleChange}
@@ -194,10 +201,11 @@ const page = (props: Props) => {
                       />
                     </div>
                     <div className="space-y-2 flex flex-col">
-                      <label htmlFor="start-date" className="text-deep-blue">
+                      <label htmlFor="start-date" className="text-white">
                         End Date
                       </label>
                       <Field
+                      className="rounded-md"
                         name="end_time"
                         type="datetime-local"
                         onChange={handleChange}
@@ -208,10 +216,11 @@ const page = (props: Props) => {
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-2 flex flex-col">
-                      <label htmlFor="start-date" className="text-deep-blue">
+                      <label htmlFor="start-date" className="text-white">
                         Event Description
                       </label>
                       <Field
+                      className="rounded-md"
                         as="textarea"
                         name="description"
                         onChange={handleChange}
@@ -227,7 +236,7 @@ const page = (props: Props) => {
                       </div>
                     </div>
                     <div className="space-y-2 flex flex-col">
-                      <label htmlFor="start-date" className="text-deep-blue">
+                      <label htmlFor="start-date" className="text-white">
                         Poap Image
                       </label>
                       <input
@@ -249,7 +258,7 @@ const page = (props: Props) => {
                 </CardContent>
                 <CardFooter className="flex justify-end">
                   <Button
-                    className="text-primary hover:text-deep-blue bg-deep-blue"
+                    className="text-light-black hover:text-white bg-primary"
                     type="submit"
                     disabled={isSubmitting}
                   >
