@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react";
+import React, { useEffect } from "react";
 import SidebarItem from "./sidebar-item";
 import { IoLogOut, IoTicket } from "react-icons/io5";
 import { TiHome } from "react-icons/ti";
@@ -10,6 +10,8 @@ import { MdCreateNewFolder } from "react-icons/md";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { useDisconnect } from "@starknet-react/core";
+import { usePathname, useRouter } from 'next/navigation';
+
 
 const Sidebar = () => {
   const eventMainSidebarData = [
@@ -39,6 +41,18 @@ const Sidebar = () => {
       title: "SPOKs",
     },
   ];
+  const { disconnect, status } = useDisconnect({});
+  const router = useRouter();
+
+
+
+  const pathname = usePathname()
+
+  React.useEffect(() => {
+    if (status === "success") {
+      router.push("/");
+    } 
+  }, [status, router]);
 
   return (
     <div className="hidden h-screen w-64 md:block fixed bg-deep-blue">
@@ -56,7 +70,7 @@ const Sidebar = () => {
           </div>
           <div className="">
             {eventMainSidebarData.map((menu, index) => (
-              <SidebarItem key={index} menu={menu} />
+              <SidebarItem key={index} menu={menu} pathname={pathname}/>
             ))}
           </div>
         </div>
@@ -64,7 +78,7 @@ const Sidebar = () => {
          <hr className="h-4 w-full mx-10"/>
           <p>
 
-       <Button className="flex gap-2 bg-transparent py-6 " onClick={()=>{useDisconnect({})}}>
+       <Button className="flex gap-2 bg-transparent py-6 " onClick={()=>{disconnect()}}>
        <IoLogOut color="#fff" size={30}/>
        <p className="text-white ml-2 text-lg px-3 font-semibold ">LogOut</p>
        </Button>
