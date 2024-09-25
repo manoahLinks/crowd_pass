@@ -10,11 +10,21 @@ import {   Card,
   CardTitle, } from '@/components/ui/card';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
-
+import { cairo } from 'starknet'
+import { Contract, RpcProvider } from 'starknet'
+import eventAbi from '@/Abis/eventAbi.json'
+import { useAccount } from "@starknet-react/core";
 
 type Props = {}
 
 const page = (props: Props) => {
+
+  const contractAddr = "0x767b1f18bcfe9f131d797fdefe0a5adc8d268cf67d0b3f02122b3e56f3aa38d";
+
+  const { account, address, status} = useAccount();
+
+  const eventContract = new Contract(eventAbi, contractAddr, account)
+
   return (
     <div className="w-full mt-10 flex justify-center items-center">
         <Card className="w-full bg-light-black border-0 border-none max-w-2xl shadow-2xl mb-4">
@@ -28,7 +38,7 @@ const page = (props: Props) => {
             initialValues={{
               name: "",
               description: "",
-              city: "",
+              total_ticket: 0,
               country: "",
               start_date: new Date(),
               end_date: new Date(),
@@ -36,7 +46,7 @@ const page = (props: Props) => {
               event_url: "https://poap.xyz",
               virtual_event: false,
               img: "",
-              email: "",
+              ticket_price: 0,
               event_template_id: 1,
               private_event: false,
               notify_issuer: true,
@@ -51,7 +61,11 @@ const page = (props: Props) => {
               setSubmitting(true);
               const toast1 = toast.loading("Creating Events");
               try {
-              
+
+                const _start_date = new Date(values.start_time).getTime() / 1000;
+                const _end_date = new Date(values.end_time).getTime() / 1000;
+                
+                await eventContract.create_event(values.name, values.eventCategory, _start_date, _end_date, cairo.uint256(values.ticket_price * 1e18), values.total_ticket)
                 toast.remove(toast1);
                 toast.success("Event Created");
                 // console.log(formData)
@@ -93,44 +107,44 @@ const page = (props: Props) => {
                     </div>
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="email" className="text-white">
-                        Email
+                        Ticket Price
                       </label>
                       <Field
                       className="rounded-md"
-                        type="email"
-                        name="email"
+                        type="number"
+                        name="ticket_price"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.email}
+                        value={values.ticket_price}
                         placeholder={"input your mail"}
                       />
                       <div className="text-red">
-                        {errors.email && touched.email && errors.email}
+                        {errors.ticket_price && touched.ticket_price && errors.ticket_price}
                       </div>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="ticket-price" className="text-white">
-                        City
+                        Total Tickets
                       </label>
                       <Field
                       className="rounded-md"
-                        type="text"
-                        name="city"
+                        type="number"
+                        name="total_ticket"
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        value={values.city}
+                        value={values.total_ticket}
                         placeholder={"input event city"}
                       />
                       <div className="text-red-900 text-sm">
                         {" "}
-                        {errors.city && touched.city && errors.city}
+                        {errors.total_ticket && touched.total_ticket && errors.total_ticket}
                       </div>
                     </div>
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="ticket-price" className="text-white">
-                        Country
+                        Location
                       </label>
                       <Field
                       className="rounded-md"
