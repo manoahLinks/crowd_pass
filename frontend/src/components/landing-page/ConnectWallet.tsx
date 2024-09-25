@@ -14,7 +14,6 @@ import Preloader from "../Preloader";
 
 const ConnectWallet = () => {
   const router = useRouter();
-  const { address } = useAccount();
   const { connectAsync, status } = useConnect();
   const { connectors } = useInjectedConnectors({
     recommended: [argent(), braavos()],
@@ -22,11 +21,13 @@ const ConnectWallet = () => {
     order: "random",
   });
 
+  const { address } = useAccount();
+
   React.useEffect(() => {
-    if (address) {
+    if (status === "success" || address !== undefined) {
       router.push("/dashboard");
     }
-  }, [address, router]);
+  }, [status, router]);
 
   return (
     <div>

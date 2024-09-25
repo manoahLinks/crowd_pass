@@ -26,10 +26,10 @@ const EventTabs = ({ pageTabs, data }:any) => {
       onSelect={(index) => setTabIndex(index)}
       className="ml-3 md:w-3/5 whitespace-no-wrap"
     >
-      <TabList className="flex gap-3 mb-2 overflow-x-auto md:w-full text-deep-blue mt-3">
+      <TabList className="flex gap-3 mb-2 overflow-x-auto md:w-full text-white mt-3">
         {pageTabs.map((pageTab: any, index:number) => (
           <Tab key={index} className={"text-deep-blue"}>
-            <Button variant="outline" className="w-[140px] text-deep-blue border-deep-blue">{pageTab}</Button>
+            <Button variant="outline" className="w-[140px] text-white border-white">{pageTab}</Button>
           </Tab>
         ))}
       </TabList>
@@ -44,22 +44,22 @@ const EventTabs = ({ pageTabs, data }:any) => {
               <>
                 {tabIndex === 0 ? (
                   <div className="w-full h-full flex flex-col gap-8 justify-center items-center">
-                    <h1 className="text-2xl text-deep-blue">
+                    <h1 className="text-2xl text-white">
                       You have not created any event
                     </h1>
                     <Link href="/dashboard/create-event">
-                      <Button className="text-primary hover:text-deep-blue bg-deep-blue ">
+                      <Button className="text-light-black hover:text-deep-blue bg-primary ">
                         Create Event
                       </Button>
                     </Link>
                   </div>
                 ) : (
                   <div className="w-full h-full flex flex-col gap-8 justify-center items-center">
-                    <h1 className="text-2xl text-deep-blue">
+                    <h1 className="text-2xl text-white">
                       Explore events to attend
                     </h1>
                     <Link href="/dashboard/explore-events">
-                      <Button className="text-primary hover:text-deep-blue bg-deep-blue">
+                      <Button className="text-light-black hover:text-deep-blue bg-primary">
                         Explore Events
                       </Button>
                     </Link>
