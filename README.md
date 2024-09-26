@@ -40,6 +40,8 @@ The event industry faces several significant inefficiencies that impact both org
 
 <https://sepolia.voyager.online/contract/0x04da2dd996dc36097f2f5b663db1ffa75466d32036d7bbdbe6719f768bdc5b26>
 
-## PITCH DECK <https://docs.google.com/presentation/d/1PwBl9BJ_veq5Eix4XIQHSAT0QcaqIZ7oCSBVnoASvGs/edit?usp=sharing>
+## PITCH DECK
+
+<https://docs.google.com/presentation/d/1PwBl9BJ_veq5Eix4XIQHSAT0QcaqIZ7oCSBVnoASvGs/edit?usp=sharing>
 
 ## DEMO VIDEO
