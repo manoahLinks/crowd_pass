@@ -28,7 +28,7 @@ pub mod TicketFactory {
     #[storage]
     struct Storage {
         ticket_count: u32,
-        tickets: LegacyMap::<u32, ContractAddress>,
+        tickets: Map::<u32, ContractAddress>,
     }
 
     #[embeddable_as(Tickets)]
