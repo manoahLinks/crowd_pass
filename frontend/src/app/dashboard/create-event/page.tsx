@@ -19,7 +19,7 @@ type Props = {}
 
 const page = (props: Props) => {
 
-  const contractAddr = "0x767b1f18bcfe9f131d797fdefe0a5adc8d268cf67d0b3f02122b3e56f3aa38d";
+  const contractAddr = "0x05db5c273a4d43fb94758c49428c9c70fbb8185fe77cf91ccaacee8215cf1367";
 
   const { account, address, status} = useAccount();
 
@@ -53,8 +53,8 @@ const page = (props: Props) => {
               requested_codes: 10,
               start_time: "00:00",
               end_time: "00:00",
-              eventCategory: "free"
-           
+              eventCategory: "free",
+              eventType: "physical"
             }}
             onSubmit={async (values, { setSubmitting }) => {
               console.log(values)
@@ -65,7 +65,7 @@ const page = (props: Props) => {
                 const _start_date = new Date(values.start_time).getTime() / 1000;
                 const _end_date = new Date(values.end_time).getTime() / 1000;
                 
-                await eventContract.create_event(values.name, values.eventCategory, _start_date, _end_date, cairo.uint256(values.ticket_price * 1e18), values.total_ticket)
+                await eventContract.create_event(values.name, values.description, "hello.png", values.country, values.eventCategory, values.eventType,  _start_date, _end_date, cairo.uint256(values.ticket_price * 1e18), values.total_ticket)
                 toast.remove(toast1);
                 toast.success("Event Created");
                 // console.log(formData)
@@ -107,7 +107,7 @@ const page = (props: Props) => {
                     </div>
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="email" className="text-white">
-                        Ticket Price
+                        Ticket Price ($STRK)
                       </label>
                       <Field
                       className="rounded-md"
@@ -116,7 +116,7 @@ const page = (props: Props) => {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.ticket_price}
-                        placeholder={"input your mail"}
+                        placeholder={"eg $STRK 100"}
                       />
                       <div className="text-red">
                         {errors.ticket_price && touched.ticket_price && errors.ticket_price}

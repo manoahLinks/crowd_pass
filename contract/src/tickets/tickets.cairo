@@ -14,12 +14,15 @@ pub trait ITicketFactory<TContractState> {
 pub mod TicketFactory {
     use super::ITicketFactory;
     use starknet::{
-        ContractAddress, class_hash::ClassHash, syscalls::deploy_syscall, SyscallResultTrait
+        ContractAddress, class_hash::ClassHash, syscalls::deploy_syscall, SyscallResultTrait, 
+        storage::{
+            Map,
+            StoragePointerReadAccess, StoragePointerWriteAccess,
+        }
     };
     use core::traits::{TryInto, Into};
 
-    const TICKET_NFT_CLASS_HASH: felt252 =
-        0x886588a25b1a80e0fbf1d625c24f3d4a337ba7f50e9027d889e68215672986;
+    const TICKET_NFT_CLASS_HASH: felt252 = 0xdb8e966fd661153e22cd588ad816605900a06569edc47e2adcc629619b2b31;
 
     // storage
     #[storage]
