@@ -4,10 +4,10 @@ use starknet::{ContractAddress, storage::Vec};
 pub trait IEventContract<TContractState> {
     fn create_event(
         ref self: TContractState,
-        _name: felt252,
-        _description: felt252,
-        _image: felt252,
-        _location: felt252,
+        _name: ByteArray,
+        _description: ByteArray,
+        _image: ByteArray,
+        _location: ByteArray,
         _category: felt252,
         _event_type: felt252,
         _start_date: u64,
@@ -36,10 +36,10 @@ enum EventType {
 #[derive(Drop, Serde, starknet::Store)]
 pub struct Events {
     id: u32,
-    name: felt252,
-    description: felt252,
-    image: felt252,
-    location: felt252,
+    name: ByteArray,
+    description: ByteArray,
+    image: ByteArray,
+    location: ByteArray,
     organizer: ContractAddress,
     event_type: felt252,
     category: felt252,
@@ -145,10 +145,10 @@ pub mod EventContract {
         // ------------------ WRITE FUNCTIONS -----------------------
         fn create_event(
             ref self: ContractState,
-            _name: felt252,
-            _description: felt252,
-            _image: felt252,
-            _location: felt252,
+            _name: ByteArray,
+            _description: ByteArray,
+            _image: ByteArray,
+            _location: ByteArray,
             _category: felt252,
             _event_type: felt252,
             _start_date: u64,
