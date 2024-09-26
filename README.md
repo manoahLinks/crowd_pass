@@ -14,8 +14,8 @@ The event industry faces several significant inefficiencies that impact both org
 
 ### For Event Attendees:
 
-1. Fake Tickets: Attendees risk purchasing counterfeit tickets, which can prevent them from accessing the event.
-2. Refund Insecurities: If an event is canceled, attendees may face difficulties in getting refunds, creating financial insecurity.
+1. `Fake Tickets`: Attendees risk purchasing counterfeit tickets, which can prevent them from accessing the event.
+2. `Refund Insecurities`: If an event is canceled, attendees may face difficulties in getting refunds, creating financial insecurity.
 
    In summary, event organizers struggle with managing ticket sales, preventing fraud, and ensuring proper revenue tracking, while attendees worry about the authenticity of tickets and the security of their funds in case of event cancellations.
 
