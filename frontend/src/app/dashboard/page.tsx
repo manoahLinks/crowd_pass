@@ -3,12 +3,25 @@
 import DashboardAnalytics from '@/components/dashboard/dashboard-analytics';
 import EventTabs from '@/components/dashboard/events-tabs';
 import RecentActivities from '@/components/dashboard/recent-activities';
+import { useReadContract } from '@starknet-react/core';
 import React, { useState } from 'react'
 import { TbLoaderQuarter } from 'react-icons/tb';
+import eventAbi from "../../Abis/eventAbi.json"
 
 type Props = {}
 
 const page = (props: Props) => {
+  const contractAddr = '0x05db5c273a4d43fb94758c49428c9c70fbb8185fe77cf91ccaacee8215cf1367';
+
+  const { data } = useReadContract({
+    functionName: "get_event_count",
+    args: [],
+    abi: eventAbi,
+    address: contractAddr,
+    watch: true,
+  });
+
+
   const [allEvents, setAllEvents] = useState({loading: false, data:[]});
 
   return (
@@ -24,7 +37,7 @@ const page = (props: Props) => {
       <DashboardAnalytics
         eventAttended={0}
         eventHosted={0}
-        totalEvents={0}
+        totalEvents={data === undefined? 0 : Number(data)}
       />
 
       <div className="flex gap-2">

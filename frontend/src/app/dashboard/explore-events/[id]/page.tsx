@@ -1,11 +1,29 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useReadContract } from "@starknet-react/core";
+import { useParams } from "next/navigation";
 import React from "react";
 import { BsCash } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
+import eventAbi from "../../../../Abis/eventAbi.json";
+import { feltToString } from "@/helpers/helper";
 
 type Props = {};
 
 const page = (props: Props) => {
+  const params = useParams<{ id: string }>();
+  const contractAddr =
+    "0x05db5c273a4d43fb94758c49428c9c70fbb8185fe77cf91ccaacee8215cf1367";
+
+  const { data } = useReadContract({
+    functionName: "get_event",
+    args: [Number(params.id)],
+    abi: eventAbi,
+    address: contractAddr,
+    watch: true,
+  });
+  console.log(data);
   const attendee = true;
   return (
     <div>
@@ -29,24 +47,47 @@ const page = (props: Props) => {
           alt="Event Image"
           className="object-cover w-[45%] rounded-2xl"
         />
-        <div className="flex flex-col gap-10">
-          <h1 className="text-white font-bold text-3xl">
-            DEVCON - Developer’s Conference 24
-          </h1>
-          <p className="text-white text-base ">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus,
-            inventore consequuntur ipsam eaque quo iure a voluptatum, est
-            dolores sit tenetur molestiae expedita suscipit atque minus quia,
-            fugit temporibus excepturi animi magni. Excepturi aperiam soluta,
-            fuga natus quas officia vero.
-          </p>
+        <div className="flex flex-col justify-between h-full">
+          <div className="flex flex-col gap-10">
+            <h1 className="text-white font-bold text-3xl">
+              {data ? feltToString(data.name) : ""}
+            </h1>
+            <p className="text-white text-base ">
+              {data ? feltToString(data?.description) : ""}
+            </p>
+          </div>
+          <div className="flex flex-col gap-10">
           <hr className="h2 text-white w-full " />
           <div className="flex gap-6 items-center">
-            <h1 className="text-white font-bold text-4xl">$2000</h1>
+            <div className="flex flex-col">
+              <h1 className="text-white font-bold text-4xl">{`$STRK ${
+                Number(data?.ticket_price) / 1e18
+              }`}</h1>
+              <p className="text-sm text-white italic text-right">per ticket</p>
+            </div>
+
             <p className="text-white font-extralight text-5xl">|</p>
-            <h1 className="text-white font-bold text-4xl">500</h1>
+
+            <div className="flex flex-col">
+              <h1 className="text-white font-bold text-4xl">
+                {Number(data?.total_tickets)}
+              </h1>
+              <p className="text-sm text-white italic text-right">
+                Total tickets
+              </p>
+            </div>
+
             <p className="text-white font-extralight text-5xl">|</p>
-            <h1 className="text-white font-bold text-4xl">200</h1>
+
+            <div className="flex flex-col">
+              <h1 className="text-white font-bold text-4xl">
+                {Number(data?.tickets_sold)}
+              </h1>
+              <p className="text-sm text-white italic text-right">
+                sold tickets
+              </p>
+            </div>
+          </div>
           </div>
         </div>
       </div>
