@@ -158,11 +158,12 @@ pub mod EventContract {
         ) -> bool {
             let caller = get_caller_address();
             let _event_count = self.event_count.read() + 1;
+            let address_this = get_contract_address();
 
             // assert not zero ContractAddress
             assert(caller.is_non_zero(), Errors::ZERO_ADDRESS_CALLER);
 
-            let _event_ticket_addr = self.deploy_ticket(caller, caller, _event_count.into());
+            let _event_ticket_addr = self.deploy_ticket(caller, address_this, _event_count.into());
 
             // new event struct instance
             let _event_instance = Events {
