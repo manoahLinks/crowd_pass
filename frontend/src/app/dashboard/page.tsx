@@ -11,7 +11,7 @@ import eventAbi from "../../Abis/eventAbi.json"
 type Props = {}
 
 const page = (props: Props) => {
-  const contractAddr = '0x05db5c273a4d43fb94758c49428c9c70fbb8185fe77cf91ccaacee8215cf1367';
+  const contractAddr = '0x04da2dd996dc36097f2f5b663db1ffa75466d32036d7bbdbe6719f768bdc5b26';
 
   const { data } = useReadContract({
     functionName: "get_event_count",

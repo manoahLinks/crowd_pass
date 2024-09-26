@@ -16,7 +16,7 @@ type Props = {};
 const page = (props: Props) => {
   const params = useParams<{ id: string }>();
   const contractAddr =
-    "0x05db5c273a4d43fb94758c49428c9c70fbb8185fe77cf91ccaacee8215cf1367";
+    "0x04da2dd996dc36097f2f5b663db1ffa75466d32036d7bbdbe6719f768bdc5b26";
 
   const STRK_SEPOLIA = "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d";
 
@@ -112,10 +112,10 @@ const page = (props: Props) => {
         <div className="flex flex-col justify-between h-full">
           <div className="flex flex-col gap-10">
             <h1 className="text-white font-bold text-3xl">
-              {data ? feltToString(data.name) : ""}
+              {data ? data?.name.toString() : ""}
             </h1>
             <p className="text-white text-base ">
-              {data ? feltToString(data?.description) : ""}
+              {data ? data?.description.toString() : ""}
             </p>
           </div>
           <div className="flex flex-col gap-10">

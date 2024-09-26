@@ -6,6 +6,24 @@
   },
   {
     "type": "struct",
+    "name": "core::byte_array::ByteArray",
+    "members": [
+      {
+        "name": "data",
+        "type": "core::array::Array::<core::bytes_31::bytes31>"
+      },
+      {
+        "name": "pending_word",
+        "type": "core::felt252"
+      },
+      {
+        "name": "pending_word_len",
+        "type": "core::integer::u32"
+      }
+    ]
+  },
+  {
+    "type": "struct",
     "name": "core::integer::u256",
     "members": [
       {
@@ -42,19 +60,19 @@
       },
       {
         "name": "name",
-        "type": "core::felt252"
+        "type": "core::byte_array::ByteArray"
       },
       {
         "name": "description",
-        "type": "core::felt252"
+        "type": "core::byte_array::ByteArray"
       },
       {
         "name": "image",
-        "type": "core::felt252"
+        "type": "core::byte_array::ByteArray"
       },
       {
         "name": "location",
-        "type": "core::felt252"
+        "type": "core::byte_array::ByteArray"
       },
       {
         "name": "organizer",
@@ -108,19 +126,19 @@
         "inputs": [
           {
             "name": "_name",
-            "type": "core::felt252"
+            "type": "core::byte_array::ByteArray"
           },
           {
             "name": "_description",
-            "type": "core::felt252"
+            "type": "core::byte_array::ByteArray"
           },
           {
             "name": "_image",
-            "type": "core::felt252"
+            "type": "core::byte_array::ByteArray"
           },
           {
             "name": "_location",
-            "type": "core::felt252"
+            "type": "core::byte_array::ByteArray"
           },
           {
             "name": "_category",
