@@ -4,10 +4,10 @@ use starknet::{ContractAddress, storage::Vec};
 pub trait IEventContract<TContractState> {
     fn create_event(
         ref self: TContractState,
-        _name: felt252,
-        _description: felt252,
-        _image: felt252,
-        _location: felt252,
+        _name: ByteArray,
+        _description: ByteArray,
+        _image: ByteArray,
+        _location: ByteArray,
         _category: felt252,
         _event_type: felt252,
         _start_date: u64,
@@ -36,10 +36,10 @@ enum EventType {
 #[derive(Drop, Serde, starknet::Store)]
 pub struct Events {
     id: u32,
-    name: felt252,
-    description: felt252,
-    image: felt252,
-    location: felt252,
+    name: ByteArray,
+    description: ByteArray,
+    image: ByteArray,
+    location: ByteArray,
     organizer: ContractAddress,
     event_type: felt252,
     category: felt252,
@@ -145,10 +145,10 @@ pub mod EventContract {
         // ------------------ WRITE FUNCTIONS -----------------------
         fn create_event(
             ref self: ContractState,
-            _name: felt252,
-            _description: felt252,
-            _image: felt252,
-            _location: felt252,
+            _name: ByteArray,
+            _description: ByteArray,
+            _image: ByteArray,
+            _location: ByteArray,
             _category: felt252,
             _event_type: felt252,
             _start_date: u64,
@@ -158,11 +158,12 @@ pub mod EventContract {
         ) -> bool {
             let caller = get_caller_address();
             let _event_count = self.event_count.read() + 1;
+            let address_this = get_contract_address();
 
             // assert not zero ContractAddress
             assert(caller.is_non_zero(), Errors::ZERO_ADDRESS_CALLER);
 
-            let _event_ticket_addr = self.deploy_ticket(caller, caller, _event_count.into());
+            let _event_ticket_addr = self.deploy_ticket(caller, address_this, _event_count.into());
 
             // new event struct instance
             let _event_instance = Events {
