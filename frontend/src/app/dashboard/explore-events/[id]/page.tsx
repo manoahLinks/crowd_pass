@@ -1,13 +1,15 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useReadContract } from "@starknet-react/core";
+import { useReadContract, useAccount } from "@starknet-react/core";
 import { useParams } from "next/navigation";
 import React from "react";
 import { BsCash } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import eventAbi from "../../../../Abis/eventAbi.json";
 import { feltToString } from "@/helpers/helper";
+import { CallData, Contract, ProviderInterface, RpcProvider, Uint256, cairo } from "starknet";
+import token_abi from '@/Abis/strkAbi.json';
 
 type Props = {};
 
@@ -15,6 +17,18 @@ const page = (props: Props) => {
   const params = useParams<{ id: string }>();
   const contractAddr =
     "0x05db5c273a4d43fb94758c49428c9c70fbb8185fe77cf91ccaacee8215cf1367";
+
+  const STRK_SEPOLIA = "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d";
+
+  const { account, address } = useAccount();
+
+  // RPC PROVIDER
+  const provider = new RpcProvider({
+    nodeUrl: "https://starknet-sepolia.public.blastapi.io",
+  });
+
+  // STRK SEPOLIA CONTRACT
+  const strk_contract = new Contract(token_abi, STRK_SEPOLIA, provider);
 
   const { data } = useReadContract({
     functionName: "get_event",
@@ -25,12 +39,60 @@ const page = (props: Props) => {
   });
   console.log(data);
   const attendee = true;
+
+  // --------------implement buy ticket ------
+
+  const handle_buy_ticket = async () => {
+    try {
+      if (!account) {
+        return;
+      }
+
+      const approvedAmt: Uint256 = cairo.uint256(Number(data?.ticket_price) * 1e18);
+      strk_contract.connect(account);
+      const multicall = await account?.execute([
+        // approve contract to spend ticket Amount
+        {
+          contractAddress: "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d",
+          entrypoint: "approve",
+          calldata: CallData.compile({
+            spender: contractAddr,
+            amount: approvedAmt
+          })
+        },
+
+        // purchase ticket
+        {
+          contractAddress: contractAddr,
+          entrypoint: "purchase_ticket",
+          calldata: CallData.compile({
+            _event_id: Number(params.id)
+          })
+        }
+      ])
+
+      if(!multicall) {
+        return
+      }
+
+      await provider.waitForTransaction(multicall.transaction_hash)
+      
+    } catch (error: any) {
+      console.log(error.message);
+
+    }finally{
+      console.log('done')
+    }
+
+  }
+
+  // -----------------------------------------
   return (
     <div>
       <div className="flex justify-between items-center my-4">
         <h1 className="text-white font-bold text-3xl">Event details</h1>
         {attendee === true ? (
-          <Button className="font-semibold flex gap-3 text-light-black text-base p-4">
+          <Button onClick={handle_buy_ticket} className="font-semibold flex gap-3 text-light-black text-base p-4">
             Buy Ticket{" "}
             <BsCash color="#14141A" size={20} className="font-bold" />{" "}
           </Button>
