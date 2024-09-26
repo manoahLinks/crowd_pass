@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Field, Formik } from "formik";
 import {   Card,
   CardContent,
@@ -14,16 +14,49 @@ import { cairo } from 'starknet'
 import { Contract, RpcProvider } from 'starknet'
 import eventAbi from '@/Abis/eventAbi.json'
 import { useAccount } from "@starknet-react/core";
+import axios from "axios";
+
 
 type Props = {}
 
 const page = (props: Props) => {
+
+  const [selectedFile, setSelectedFile] = useState("");
 
   const contractAddr = "0x04da2dd996dc36097f2f5b663db1ffa75466d32036d7bbdbe6719f768bdc5b26";
 
   const { account, address, status} = useAccount();
 
   const eventContract = new Contract(eventAbi, contractAddr, account)
+
+  const handleSelectImage = ({ target }: any) => {
+    setSelectedFile(target.files[0]);
+  };
+
+  const uploadImageToIPFS = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      const response = await axios.post(
+        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            pinata_api_key: process.env.NEXT_PUBLIC_PINATA_API_KEY,
+            pinata_secret_api_key:
+            process.env.NEXT_PUBLIC_PINATA_SECRET_API_KEY,
+          },
+        }
+      );
+
+      const cid = response.data.IpfsHash;
+      return cid;
+    } catch (error) {
+    }
+  };
+
 
   return (
     <div className="w-full mt-10 flex justify-center items-center">
@@ -53,11 +86,12 @@ const page = (props: Props) => {
               setSubmitting(true);
               const toast1 = toast.loading("Creating Events");
               try {
+                const eventImage = await uploadImageToIPFS()
 
                 const _start_date = new Date(values.start_time).getTime() / 1000;
                 const _end_date = new Date(values.end_time).getTime() / 1000;
                 
-                await eventContract.create_event(values.name, values.description, "hello.png", values.country, values.eventCategory, values.eventType,  _start_date, _end_date, cairo.uint256(values.ticket_price * 1e18), values.total_ticket)
+                await eventContract.create_event(values.name, values.description, eventImage, values.country, values.eventCategory, values.eventType,  _start_date, _end_date, cairo.uint256(values.ticket_price * 1e18), values.total_ticket)
                 toast.remove(toast1);
                 toast.success("Event Created");
                 // console.log(formData)
@@ -243,20 +277,15 @@ const page = (props: Props) => {
                     </div>
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="start-date" className="text-white">
-                        Poap Image
+                        Event Image
                       </label>
                       <input
                         type="file"
                         name="img"
                         accept="image/*"
-                        onChange={(event) => {
-                          handleChange({
-                            target: {
-                              name: "img",
-                            },
-                          });
-                        }}
+                        onChange={handleSelectImage}
                         onBlur={handleBlur}
+                        className='text-white'
                       />
                       <div className="text-red-900 text-sm"></div>
                     </div>

@@ -7,9 +7,9 @@ import React from "react";
 import { BsCash } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import eventAbi from "../../../../Abis/eventAbi.json";
-import { feltToString } from "@/helpers/helper";
 import { CallData, Contract, ProviderInterface, RpcProvider, Uint256, cairo } from "starknet";
 import token_abi from '@/Abis/strkAbi.json';
+import Preloader from "@/components/Preloader";
 
 type Props = {};
 
@@ -38,7 +38,6 @@ const page = (props: Props) => {
     watch: true,
   });
   console.log(data);
-  const attendee = true;
 
   // --------------implement buy ticket ------
 
@@ -89,9 +88,14 @@ const page = (props: Props) => {
   // -----------------------------------------
   return (
     <div>
+        {data === undefined && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <Preloader />
+        </div>
+      )}
       <div className="flex justify-between items-center my-4">
         <h1 className="text-white font-bold text-3xl">Event details</h1>
-        {attendee === true ? (
+        {data?.organizer.toString() === address ? (
           <Button onClick={handle_buy_ticket} className="font-semibold flex gap-3 text-light-black text-base p-4">
             Buy Ticket{" "}
             <BsCash color="#14141A" size={20} className="font-bold" />{" "}
@@ -105,7 +109,7 @@ const page = (props: Props) => {
       </div>
       <div className="flex gap-10 items-start">
         <img
-          src="/assets/about-image-podcast.jpg"
+          src={data? `https://gateway.pinata.cloud/ipfs/${data?.image.toString()}`  : ""}
           alt="Event Image"
           className="object-cover w-[45%] rounded-2xl"
         />
