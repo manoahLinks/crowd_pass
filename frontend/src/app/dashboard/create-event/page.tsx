@@ -1,7 +1,6 @@
 "use client"
 
-import React from 'react'
-import { Field, Formik } from "formik";
+import React, { useState } from 'react'
 import {   Card,
   CardContent,
   CardDescription,
@@ -10,20 +9,76 @@ import {   Card,
   CardTitle, } from '@/components/ui/card';
 import toast from 'react-hot-toast';
 import { Button } from '@/components/ui/button';
-import { cairo } from 'starknet'
-import { Contract, RpcProvider } from 'starknet'
-import eventAbi from '@/Abis/eventAbi.json'
-import { useAccount } from "@starknet-react/core";
+import axios from "axios";
+// import { cairo } from 'starknet'
+// import { Contract, RpcProvider } from 'starknet'
+// import eventAbi from '@/Abis/eventAbi.json'
+// import { useAccount } from "@starknet-react/core";
 
 type Props = {}
 
 const page = (props: Props) => {
+  const [selectedFile, setSelectedFile] = useState("");
+  const [isSubmitting, setIsSubmmiting] = useState(false);
+  const [eventName, setEventName] = useState("")
+  const [description, setDescription] = useState("")
+  const [cid, setCid] = useState("")
+  const [location, setLocation] = useState("")
+  const [category, setCategory] = useState("")
+  const [eventType, setEventType] = useState("")
+  const [startDate, setStartDate] = useState(Date.now().toString())
+  const [endDate, setEndDate] = useState(Date.now().toString())
+  const [ticketPrice, setTicketPrice] = useState(0)
+  const [totalTickets, setTotalTickets] = useState(0)
 
-  const contractAddr = "0x767b1f18bcfe9f131d797fdefe0a5adc8d268cf67d0b3f02122b3e56f3aa38d";
+  const handleSelectImage = ({ target }: any) => {
+    setSelectedFile(target.files[0]);
+  };
 
-  const { account, address, status} = useAccount();
+  const uploadImageToIPFS = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
 
-  const eventContract = new Contract(eventAbi, contractAddr, account)
+      const response = await axios.post(
+        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            pinata_api_key: process.env.NEXT_PUBLIC_PINATA_API_KEY,
+            pinata_secret_api_key:
+            process.env.NEXT_PUBLIC_PINATA_SECRET_API_KEY,
+          },
+        }
+      );
+
+      const cid = response.data.IpfsHash;
+      setCid(cid);
+      return cid;
+    } catch (error) {
+    }
+  };
+
+  const handleSubmit= async () => {
+    setIsSubmmiting(true)
+    const toast1 = toast.loading("Creating Events");
+    const eventImage = await uploadImageToIPFS()
+    const _start_date = new Date(startDate).getTime() / 1000;
+    const _end_date = new Date(endDate).getTime() / 1000;
+
+    try {
+
+      toast.remove(toast1);
+      toast.success("Event Created");
+      setIsSubmmiting(false)
+    } catch (error) {
+      toast.remove(toast1);
+      toast.error("error creating event");
+      setIsSubmmiting(false)
+      console.log(error);
+    }
+  }
 
   return (
     <div className="w-full mt-10 flex justify-center items-center">
@@ -34,57 +89,7 @@ const page = (props: Props) => {
               Fill out the details for your upcoming event.
             </CardDescription>
           </CardHeader>
-          <Formik
-            initialValues={{
-              name: "",
-              description: "",
-              total_ticket: 0,
-              country: "",
-              start_date: new Date(),
-              end_date: new Date(),
-              expiry_date: new Date(),
-              event_url: "https://poap.xyz",
-              virtual_event: false,
-              img: "",
-              ticket_price: 0,
-              event_template_id: 1,
-              private_event: false,
-              notify_issuer: true,
-              requested_codes: 10,
-              start_time: "00:00",
-              end_time: "00:00",
-              eventCategory: "free"
-           
-            }}
-            onSubmit={async (values, { setSubmitting }) => {
-              console.log(values)
-              setSubmitting(true);
-              const toast1 = toast.loading("Creating Events");
-              try {
-
-                const _start_date = new Date(values.start_time).getTime() / 1000;
-                const _end_date = new Date(values.end_time).getTime() / 1000;
-                
-                await eventContract.create_event(values.name, values.eventCategory, _start_date, _end_date, cairo.uint256(values.ticket_price * 1e18), values.total_ticket)
-                toast.remove(toast1);
-                toast.success("Event Created");
-                // console.log(formData)
-              } catch (error) {
-                toast.remove(toast1);
-                toast.error("error creating event");
-                console.log(error);
-              }
-            }}
-          >
-            {({
-              values,
-              isSubmitting,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-            }) => (
+         
               <form onSubmit={handleSubmit}>
                 <CardContent className="grid gap-6">
                   <div className="grid grid-cols-2 gap-6">
@@ -92,35 +97,25 @@ const page = (props: Props) => {
                       <label htmlFor="name" className="text-white">
                         Event Name
                       </label>
-                      <Field
+                      <input
                       className="rounded-md"
                         type="text"
                         name="name"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.name}
                         placeholder={"input your name"}
+                        onChange={(e) => setEventName(e.target.value)}
                       />
-                      <div className="text-red-900 text-sm">
-                        {errors.name && touched.name && errors.name}
-                      </div>
                     </div>
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="email" className="text-white">
-                        Ticket Price
+                        Ticket Price <span className='italic text-xs'>(in strk)</span>
                       </label>
-                      <Field
+                      <input
                       className="rounded-md"
                         type="number"
                         name="ticket_price"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.ticket_price}
-                        placeholder={"input your mail"}
+                        placeholder={"enter ticket price in strk"}
+                        onChange={(e) => setTicketPrice(Number(e.target.value))}
                       />
-                      <div className="text-red">
-                        {errors.ticket_price && touched.ticket_price && errors.ticket_price}
-                      </div>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-6">
@@ -128,37 +123,27 @@ const page = (props: Props) => {
                       <label htmlFor="ticket-price" className="text-white">
                         Total Tickets
                       </label>
-                      <Field
+                      <input
                       className="rounded-md"
                         type="number"
                         name="total_ticket"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.total_ticket}
                         placeholder={"input event city"}
+                        onChange={(e) => setTotalTickets(Number(e.target.value))}
                       />
-                      <div className="text-red-900 text-sm">
-                        {" "}
-                        {errors.total_ticket && touched.total_ticket && errors.total_ticket}
-                      </div>
                     </div>
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="ticket-price" className="text-white">
                         Location
                       </label>
-                      <Field
+                      <input
                       className="rounded-md"
                         type="text"
-                        name="country"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.country}
+                        name="Location"
                         placeholder={"input event country"}
+                        onChange={(e) => setLocation(e.target.value)}
+
                       />
-                      <div className="text-red-900 text-sm">
-                        {" "}
-                        {errors.country && touched.country && errors.country}
-                      </div>
+                      
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-6">
@@ -169,35 +154,28 @@ const page = (props: Props) => {
                       >
                         Event Category
                       </label>
-                      <Field
+                      <select
                       className="rounded-md"
-                        as="select"
                         name="eventCategory"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.eventCategory}
-                        placeholder={"Describe your event..."}
+                        onChange={(e) => setCategory(e.target.value)}
                       >
-                        <option >Free</option>
-                        <option >Paid</option>
-                        <option >Private</option>
-                      </Field>
+                        <option value={"free"}>Free</option>
+                        <option value={"paid"}>Paid</option>
+                        <option value={"private"}>Private</option>
+                      </select>
                     </div>
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="event-type" className="text-white">
                         Event Type
                       </label>
-                      <Field
+                      <select
                       className="rounded-md"
-                        as="select"
                         name="virtual_event"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.virtual_event}
+                        onChange={(e) => setEventType(e.target.value)}
                       >
-                        <option >Physical</option>
-                        <option >Virtual</option>
-                      </Field>
+                        <option value={"physical"}>Physical</option>
+                        <option value={"virtual"}>Virtual</option>
+                      </select>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-6">
@@ -205,26 +183,24 @@ const page = (props: Props) => {
                       <label htmlFor="start-date" className="text-white">
                         Start Date
                       </label>
-                      <Field
+                      <input
                       className="rounded-md"
                         name="start_time"
                         type="datetime-local"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.start_time}
+                        onChange={(e) => setStartDate(e.target.value)}
+
                       />
                     </div>
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="start-date" className="text-white">
                         End Date
                       </label>
-                      <Field
+                      <input
                       className="rounded-md"
                         name="end_time"
                         type="datetime-local"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.end_time}
+                        onChange={(e) => setEndDate(e.target.value)}
+
                       />
                     </div>
                   </div>
@@ -233,39 +209,23 @@ const page = (props: Props) => {
                       <label htmlFor="start-date" className="text-white">
                         Event Description
                       </label>
-                      <Field
+                      <textarea
                       className="rounded-md"
-                        as="textarea"
                         name="description"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.description}
                         placeholder={"Describe your event..."}
+                        onChange={(e) => setDescription(e.target.value)}
                       />
-                      <div className="text-red-900 text-sm">
-                        {" "}
-                        {errors.description &&
-                          touched.description &&
-                          errors.description}
-                      </div>
+                   
                     </div>
                     <div className="space-y-2 flex flex-col">
                       <label htmlFor="start-date" className="text-white">
-                        Poap Image
+                        Event Image
                       </label>
                       <input
                         type="file"
                         name="img"
                         accept="image/*"
-                        onChange={(event) => {
-                          handleChange({
-                            target: {
-                              name: "img",
-                            },
-                          });
-                        }}
-                        onBlur={handleBlur}
-                      />
+                        onChange={handleSelectImage} />
                       <div className="text-red-900 text-sm"></div>
                     </div>
                   </div>
@@ -280,8 +240,7 @@ const page = (props: Props) => {
                   </Button>
                 </CardFooter>
               </form>
-            )}
-          </Formik>
+        
         </Card>
       </div>
   )
