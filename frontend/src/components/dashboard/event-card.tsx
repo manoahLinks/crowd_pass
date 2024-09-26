@@ -33,10 +33,10 @@ const EventCard = (event: any) => {
         className="object-cover w-full h-44"
       />
       <Link href={`/dashboard/explore-events/${event?.event.id}`}>
-        <h2 className="text-white font-semibold px-6 py-2">{feltToString(event?.event.name)}</h2>
+        <h2 className="text-white font-semibold px-6 py-2">{event?.event.name.toString()}</h2>
       </Link>
       <p className="text-white text-xs px-6">
-      {feltToString(event?.event.description)}
+      {event?.event.description.toString()}
       </p>
     </Card>
   );
