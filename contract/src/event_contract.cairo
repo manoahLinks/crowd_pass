@@ -15,8 +15,9 @@ pub trait IEventContract<TContractState> {
         _ticket_price: u256,
         _total_tickets: u256
     ) -> bool;
-    fn get_all_events (self : @TContractState ) -> Array<Events>;
-    // fn reschedule_event(ref self: TContractState, _event_id: u32, _start_date: u64, _end_date: u64);
+    fn get_all_events(self: @TContractState) -> Array<Events>;
+    // fn reschedule_event(ref self: TContractState, _event_id: u32, _start_date: u64, _end_date:
+    // u64);
     fn cancel_event(ref self: TContractState, _event_id: u32);
     fn purchase_ticket(ref self: TContractState, _event_id: u32);
     // fn resale_ticket (ref self : TContractState, event_id: u32) -> bool;
@@ -53,7 +54,6 @@ pub struct Events {
 
 #[starknet::contract]
 pub mod EventContract {
-
     use starknet::storage::{
         StoragePointerReadAccess, StoragePointerWriteAccess, Vec, VecTrait, MutableVecTrait, Map
     };
@@ -64,8 +64,7 @@ pub mod EventContract {
     use starknet::{get_caller_address, ContractAddress, get_block_timestamp, get_contract_address};
 
     use contract::{
-        errors::event_errors::Errors,
-        tickets::tickets::TicketFactory,
+        errors::event_errors::Errors, tickets::tickets::TicketFactory,
         interfaces::{
             erc721_interface::{IERC721Dispatcher, IERC721DispatcherTrait},
             erc20_interface::{IERC20Dispatcher, IERC20DispatcherTrait}
@@ -133,10 +132,7 @@ pub mod EventContract {
     }
 
     #[constructor]
-    fn constructor(
-        ref self: ContractState,
-        _token_address: ContractAddress,
-    ) {
+    fn constructor(ref self: ContractState, _token_address: ContractAddress,) {
         self.token_address.write(_token_address);
     }
 
@@ -146,7 +142,6 @@ pub mod EventContract {
     // implementions and functions
     #[abi(embed_v0)]
     impl EventContractImpl of IEventContract<ContractState> {
-
         // ------------------ WRITE FUNCTIONS -----------------------
         fn create_event(
             ref self: ContractState,
@@ -215,10 +210,7 @@ pub mod EventContract {
             assert(caller == _organizer, Errors::NOT_ORGANIZER);
 
             // assert event has not ended
-            assert(
-                event_instance.end_date > get_block_timestamp(),
-                Errors::EVENT_ENDED
-            );
+            assert(event_instance.end_date > get_block_timestamp(), Errors::EVENT_ENDED);
 
             // cancel event here
             self
@@ -328,13 +320,12 @@ pub mod EventContract {
             let _count = self.event_count.read();
             let mut i: u32 = 1;
 
-            while i < _count
-                + 1 {
-                    let event: Events = self.events.read(i);
-                    events.append(event);
-                    i += 1;
-                };
-           
+            while i < _count + 1 {
+                let event: Events = self.events.read(i);
+                events.append(event);
+                i += 1;
+            };
+
             events
         }
 
@@ -345,5 +336,5 @@ pub mod EventContract {
         fn get_event(self: @ContractState, _event_id: u32) -> Events {
             self.events.read(_event_id)
         }
-    }    
+    }
 }

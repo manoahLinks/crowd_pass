@@ -14,21 +14,19 @@ pub trait ITicketFactory<TContractState> {
 pub mod TicketFactory {
     use super::ITicketFactory;
     use starknet::{
-        ContractAddress, class_hash::ClassHash, syscalls::deploy_syscall, SyscallResultTrait, 
-        storage::{
-            Map,
-            StoragePointerReadAccess, StoragePointerWriteAccess,
-        }
+        ContractAddress, class_hash::ClassHash, syscalls::deploy_syscall, SyscallResultTrait,
+        storage::{Map, StoragePointerReadAccess, StoragePointerWriteAccess,}
     };
     use core::traits::{TryInto, Into};
 
-    const TICKET_NFT_CLASS_HASH: felt252 = 0xdb8e966fd661153e22cd588ad816605900a06569edc47e2adcc629619b2b31;
+    const TICKET_NFT_CLASS_HASH: felt252 =
+        0xdb8e966fd661153e22cd588ad816605900a06569edc47e2adcc629619b2b31;
 
     // storage
     #[storage]
     struct Storage {
         ticket_count: u32,
-        tickets: LegacyMap::<u32, ContractAddress>,
+        tickets: Map::<u32, ContractAddress>,
     }
 
     #[embeddable_as(Tickets)]
@@ -36,7 +34,10 @@ pub mod TicketFactory {
         TContractState, +HasComponent<TContractState>
     > of ITicketFactory<ComponentState<TContractState>> {
         fn deploy_ticket(
-            ref self: ComponentState<TContractState>, pauser: ContractAddress, minter: ContractAddress, salt: felt252
+            ref self: ComponentState<TContractState>,
+            pauser: ContractAddress,
+            minter: ContractAddress,
+            salt: felt252
         ) -> ContractAddress {
             let _ticket_count = self.ticket_count.read() + 1;
 
