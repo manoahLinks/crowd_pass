@@ -84,7 +84,7 @@ const page = (props: Props) => {
     }
 
   }
-
+console.log(address?.toString(), data?.organizer.toString(16))
   // -----------------------------------------
   return (
     <div>
@@ -95,7 +95,7 @@ const page = (props: Props) => {
       )}
       <div className="flex justify-between items-center my-4">
         <h1 className="text-white font-bold text-3xl">Event details</h1>
-        {data?.organizer.toString() === address ? (
+        {data && `0x00${data?.organizer.toString(16).toLowerCase()}` != address?.toLowerCase() ? (
           <Button onClick={handle_buy_ticket} className="font-semibold flex gap-3 text-light-black text-base p-4">
             Buy Ticket{" "}
             <BsCash color="#14141A" size={20} className="font-bold" />{" "}
