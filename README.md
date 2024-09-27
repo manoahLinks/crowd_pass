@@ -42,6 +42,8 @@ The event industry faces several significant inefficiencies that impact both org
 
 ## PITCH DECK
 
+<https://www.loom.com/share/a30e0e54fbde489d881cee92266c5507?sid=e4c037a0-05a3-473f-b963-0f840ef21221>
+
 <https://docs.google.com/presentation/d/1PwBl9BJ_veq5Eix4XIQHSAT0QcaqIZ7oCSBVnoASvGs/edit?usp=sharing>
 
 ## DEMO VIDEO
