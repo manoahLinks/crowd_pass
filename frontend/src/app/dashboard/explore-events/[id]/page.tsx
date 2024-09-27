@@ -10,6 +10,7 @@ import eventAbi from "../../../../Abis/eventAbi.json";
 import { CallData, Contract, ProviderInterface, RpcProvider, Uint256, cairo } from "starknet";
 import token_abi from '@/Abis/strkAbi.json';
 import Preloader from "@/components/Preloader";
+import toast from "react-hot-toast";
 
 type Props = {};
 
@@ -29,6 +30,7 @@ const page = (props: Props) => {
 
   // STRK SEPOLIA CONTRACT
   const strk_contract = new Contract(token_abi, STRK_SEPOLIA, provider);
+  const eventContract = new Contract(eventAbi, contractAddr, account)
 
   const { data } = useReadContract({
     functionName: "get_event",
@@ -84,8 +86,24 @@ const page = (props: Props) => {
     }
 
   }
-console.log(address?.toString(), data?.organizer.toString(16))
   // -----------------------------------------
+
+  const handle_cancel_event = async () => {
+
+    const toast1 = toast.loading('Canceling Event')
+
+    try {
+        await eventContract.cancel_event(Number(params.id))
+        toast.remove(toast1);
+        toast.success("Event Canceled")
+    } catch (error: any) {
+        toast.remove(toast1);
+        toast.error(error.message)
+    }
+
+  }
+
+
   return (
     <div>
         {data === undefined && (
@@ -101,7 +119,7 @@ console.log(address?.toString(), data?.organizer.toString(16))
             <BsCash color="#14141A" size={20} className="font-bold" />{" "}
           </Button>
         ) : (
-          <Button className="font-semibold flex gap-3 text-light-black text-base p-4">
+          <Button onClick={handle_cancel_event} className="font-semibold flex gap-3 text-light-black text-base p-4">
             Cancel Event{" "}
             <MdCancel color="#14141A" size={20} className="font-bold" />
           </Button>
