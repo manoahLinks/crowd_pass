@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CROWDPASS
 
-## Getting Started
+## OVERVIEW
+Crowdpass is a decentralized event management platform that aid event organizers to create and manage events, it also aid event attendees to purchase, sell and get a refund on ticket purchased in the case of event cancelation.
 
-First, run the development server:
+## PROBLEM
+The event industry faces several significant inefficiencies that impact both organizers and attendees.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### For Organizers:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Ticket Management Issues: 
+      - ``Duplication of Tickets``: Malicious actors can duplicate tickets, making it difficult to ensure that each ticket is unique and valid.
+      - ``Unaccountable Funds``: There is often a lack of transparency and accountability in ticket sales, leading to potential capital and revenue loss. 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### For Event Attendees:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. `Fake Tickets`: Attendees risk purchasing counterfeit tickets, which can prevent them from accessing the event.
+2. `Refund Insecurities`: If an event is canceled, attendees may face difficulties in getting refunds, creating financial insecurity.
 
-## Learn More
+   In summary, event organizers struggle with managing ticket sales, preventing fraud, and ensuring proper revenue tracking, while attendees worry about the authenticity of tickets and the security of their funds in case of event cancellations.
 
-To learn more about Next.js, take a look at the following resources:
+## SOLUTION
+`Crowdpass` aims to fix the above inefficiencies by utilizing NFTs to create tickets so attendees own the tickets purchased for an event, unlocking functionalities like reselling of tickets, refund for tickets on event cancellation and so much more.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> [!IMPORTANT]
+> - Our smartcontract is an escrow contract, that handles all tickets (NFTs) and funds from ticket purchase.
+> - Event organizers can monitor but can't claim funds from ticket sales until after the event's end_date.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## FUNCTIONALITIES
+1. `create_event`:
+2. `cancel_event`:
+3. `reschedule_event`:
+4. `create_ticket`:
+5. `purchase_ticket`:
+6. `resale_ticket`:
+7. `claim_ticket_refund`:
 
-## Deploy on Vercel
+## EVENT CONTRACT ADDRESS: 
+0x04da2dd996dc36097f2f5b663db1ffa75466d32036d7bbdbe6719f768bdc5b26
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<https://sepolia.voyager.online/contract/0x04da2dd996dc36097f2f5b663db1ffa75466d32036d7bbdbe6719f768bdc5b26>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## PITCH DECK
+
+<https://docs.google.com/presentation/d/1PwBl9BJ_veq5Eix4XIQHSAT0QcaqIZ7oCSBVnoASvGs/edit?usp=sharing>
+
+## DEMO VIDEO
+
+<https://www.loom.com/share/a30e0e54fbde489d881cee92266c5507?sid=e4c037a0-05a3-473f-b963-0f840ef21221>
+
+## FIGMA LINK
+
+<https://www.figma.com/design/naGyiUzGGLcEhuArcIekHf/CrowdPass?node-id=0-1&node-type=canvas&t=CoAmYg1fJvYHbEGt-0>
